@@ -1,8 +1,8 @@
 # lzgyy
 
 #### 项目介绍
-{**平台简介**
-基于springboot容器，zokeeper分布式协调服务，dubbo分布式服务框架,redis缓存,spring jdbctemplate,mybatis持久层框架，mysql数据库等，加入netty+mqtt}
+**平台简介**
+基于springboot容器，zokeeper分布式协调服务，dubbo分布式服务框架,redis缓存,spring jdbctemplate,mybatis持久层框架，mysql数据库等，加入netty+mqtt
 
 #### 软件架构
 
