@@ -7,30 +7,30 @@
 #### 软件架构
 
 ### 项目结构
-lzgyy
-  ├── db 数据库文件存放目录
-  ├── lzggy-config 配置相关
-	├── lzggy-druid-config 数据库连接池
-	├── lzggy-dubbo-consumer-config  dubbo消费者通用配置
-	├── lzggy-dubbo-provider-config  dubbo生产者通用配置
-	├── lzggy-swagger-config swagger swagger接口文档生成配置
-  ├── lzgyy-common 工具类
-  ├── lzgyy-core 核心类
-  ├── lzgyy-manage 管理服务
-	├──  lzggy-dubbo-admin-war dubbo管理平台war包
-  ├── lzgyy-plugins 插件包
-  	├── lzgyy-elasticsearch-plugin es搜索引擎（暂未实现）
-  	├── lzgyy-iot-client	物联网客户端
-  	├── lzgyy-iot-core   	物联网核心类
-  	├── lzgyy-iot-service	物联网服务端
-  	├── lzgyy-quartz-plugin 定时任务器（暂未实现）
-	├── lzgyy-redis-interf	缓存接口
-	├── lzgyy-redis-service 缓存服务类（生产者）
-  ├── lzgyy-products
-	├── lzgyy-platform-api 	      平台API接口
-	├── lzgyy-platform-interf  平台接口
-	├── lzgyy-platform-service 平台服务类（生产者）
-	├── lzgyy-platform-web     平台网页端（消费者）
+lzgyy  
+  ├── db 数据库文件存放目录  
+  ├── lzggy-config 配置相关  
+	├── lzggy-druid-config 数据库连接池  
+	├── lzggy-dubbo-consumer-config  dubbo消费者通用配置  
+	├── lzggy-dubbo-provider-config  dubbo生产者通用配置  
+	├── lzggy-swagger-config swagger swagger接口文档生成配置  
+  ├── lzgyy-common 工具类  
+  ├── lzgyy-core 核心类  
+  ├── lzgyy-manage 管理服务  
+	├──  lzggy-dubbo-admin-war dubbo管理平台war包  
+  ├── lzgyy-plugins 插件包  
+  	├── lzgyy-elasticsearch-plugin es搜索引擎（暂未实现）  
+  	├── lzgyy-iot-client	物联网客户端  
+  	├── lzgyy-iot-core   	物联网核心类  
+  	├── lzgyy-iot-service	物联网服务端  
+  	├── lzgyy-quartz-plugin 定时任务器（暂未实现）  
+	├── lzgyy-redis-interf	缓存接口  
+	├── lzgyy-redis-service 缓存服务类（生产者）  
+  ├── lzgyy-products  
+	├── lzgyy-platform-api 	      平台API接口  
+	├── lzgyy-platform-interf  平台接口  
+	├── lzgyy-platform-service 平台服务类（生产者）  
+	├── lzgyy-platform-web     平台网页端（消费者）  
 
 ### 项目备注
 
