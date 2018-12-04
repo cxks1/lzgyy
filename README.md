@@ -28,7 +28,7 @@ lzgyy
 	├── lzgyy-redis-interf	缓存接口  
 	├── lzgyy-redis-service 缓存服务类（生产者）  
   ├── lzgyy-products  
-	├── lzgyy-platform-api 	      平台API接口  
+	├── lzgyy-platform-api     平台API接口  
 	├── lzgyy-platform-interf  平台接口  
 	├── lzgyy-platform-service 平台服务类（生产者）  
 	├── lzgyy-platform-web     平台网页端（消费者）  
