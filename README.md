@@ -7,6 +7,7 @@
 #### 软件架构
 
 ### 项目结构
+```
 lzgyy  
   ├── db 数据库文件存放目录  
   ├── lzggy-config 配置相关  
@@ -31,7 +32,7 @@ lzgyy
 	├── lzgyy-platform-interf  平台接口  
 	├── lzgyy-platform-service 平台服务类（生产者）  
 	├── lzgyy-platform-web     平台网页端（消费者）  
-
+```
 ### 项目备注
 
 1. 暂未涵盖前端，权限等，具体项目结构后续或许会有所更新变动，仅供参考
