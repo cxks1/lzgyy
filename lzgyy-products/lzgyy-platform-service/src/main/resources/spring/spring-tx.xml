@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+        
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" ></property>
+    </bean>
+    <!-- 通知 -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<!--定义查询方法都是只读的 -->
+            <tx:method name="query*"   propagation="SUPPORTS" read-only="true" />
+            <tx:method name="find*"    propagation="SUPPORTS" read-only="true" />
+			<tx:method name="select*"  propagation="SUPPORTS" read-only="true" />
+			<tx:method name="get*"     propagation="SUPPORTS" read-only="true" />
+  			
+            <!-- 主库执行操作，事务传播行为定义为默认行为 -->
+            <tx:method name="save*"    propagation="REQUIRED" />
+			<tx:method name="insert*"  propagation="REQUIRED" />
+			<tx:method name="add*"     propagation="REQUIRED" />
+			<tx:method name="create*"  propagation="REQUIRED" />
+			<tx:method name="delete*"  propagation="REQUIRED" />
+			<tx:method name="update*"  propagation="REQUIRED" />
+			<tx:method name="init"     propagation="REQUIRED" />
+			<tx:method name="create*"  propagation="REQUIRED" />
+			<tx:method name="dostory*" propagation="REQUIRED" />
+			
+			<!--其他方法使用默认事务策略 -->
+            <tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- 切面 -->
+	<aop:config>
+		<aop:advisor advice-ref="txAdvice"
+			pointcut="execution(* com.lzgyy.platform.modules..*.service.*.*.*(..))" />
+	</aop:config>
+</beans>

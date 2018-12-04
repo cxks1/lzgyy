@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  	<parent>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-starter-parent</artifactId>
+       <version>2.0.5.RELEASE</version>
+  	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.lzgyy</groupId>
+	<artifactId>lzgyy</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>lzgyy</name>
+	<description>利贞工业云</description>
+	<modules>
+		<module>lzggy-config</module>
+		<module>lzgyy-common</module>
+		<module>lzgyy-core</module>
+		<module>lzgyy-manage</module>
+		<module>lzgyy-plugins</module>
+		<module>lzgyy-products</module>
+	</modules>
+	<!-- 远程仓库配置 -->
+	<repositories>
+		<repository>
+			<id>maven-aliyun</id>
+			<name>Maven Aliyun</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<!-- 远程下载插件构件配置 -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>maven-aliyun</id>
+			<name>Maven Aliyun</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+	<properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <maven.compiler.plugin.version>2.5.1</maven.compiler.plugin.version>
+       	<maven.enforcer.plugin.version>1.3.1</maven.enforcer.plugin.version>
+       	
+       	<commons-pool2.version>2.4.2</commons-pool2.version>
+       	<jedis.version>2.9.0</jedis.version>
+       	<commons-io.version>2.4</commons-io.version>
+		<fastjson.version>1.2.46</fastjson.version>
+		<jackson.version>2.9.7</jackson.version>
+		<user.agent.utils.version>1.2.4</user.agent.utils.version>
+		<guava.version>19.0</guava.version>
+		<javax.servlet-api.version>3.0.1</javax.servlet-api.version>
+    	<log4j.version>1.2.15</log4j.version>
+       	<zookeeper.version>3.4.5</zookeeper.version>
+       	<zkclient.version>0.7</zkclient.version>
+       	<curator.version>2.4.2</curator.version>
+       	<dubbo.version>2.6.3</dubbo.version>
+       	<ws.version>2.0</ws.version>
+		<resteasy.version>3.6.1.Final</resteasy.version>
+		<hessian.version>4.0.51</hessian.version>
+		<kryo.version>2.24.0</kryo.version>
+		<kryo-serializers.version>0.41</kryo-serializers.version>
+		<fst.version>2.56</fst.version>
+		<mybatis.spring.boot.version>1.3.1</mybatis.spring.boot.version>
+		<druid.version>1.1.9</druid.version>
+		<json.bind.version>1.0</json.bind.version>
+		<yasson.version>1.0.1</yasson.version>
+		<glassfish.version>1.1.2</glassfish.version>
+		<springfox-swagger.version>2.2.2</springfox-swagger.version>
+		<swagger-ui-layer.version>0.0.6</swagger-ui-layer.version>
+		<quartz.version>2.2.3</quartz.version>
+    </properties>
+    <dependencyManagement>
+    	<dependencies>
+    		<!-- spring-boot jdbc -->
+	    	<!-- <dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-jdbc</artifactId>
+			</dependency> -->
+			<!-- spring-boot aop -->
+			<!-- <dependency>
+			    <groupId>org.springframework.boot</groupId>
+			    <artifactId>spring-boot-starter-aop</artifactId>
+			</dependency> -->
+			<!-- <dependency>
+	            <groupId>org.springframework</groupId>
+	            <artifactId>spring-context-support</artifactId>
+	        </dependency> -->
+	    	<!-- commons -->
+			<!-- <dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+			</dependency> -->
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io.version}</version>
+			</dependency>
+			<!-- <dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+			</dependency> -->
+			<!-- redis -->
+			<!-- <dependency>
+	        	<groupId>org.springframework.boot</groupId>
+	        	<artifactId>spring-boot-starter-cache</artifactId>
+		    </dependency>
+		    <dependency>
+		    	<groupId>org.springframework.boot</groupId>
+		    	<artifactId>spring-boot-starter-data-redis</artifactId>
+		    </dependency> -->
+		    <dependency>
+		    	<groupId>org.apache.commons</groupId>
+		    	<artifactId>commons-pool2</artifactId>
+		    	<version>${commons-pool2.version}</version>
+		    </dependency>
+		    <dependency>
+		        <groupId>redis.clients</groupId>
+		        <artifactId>jedis</artifactId>
+		        <version>${jedis.version}</version>
+		    </dependency>
+	    	<!-- fastjson -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
+			</dependency>
+			<!-- jackson -->
+			<dependency>
+			    <groupId>com.fasterxml.jackson.core</groupId>
+			    <artifactId>jackson-databind</artifactId>
+			    <version>${jackson.version}</version>
+			</dependency>
+			<!-- 用户代理工具 -->
+			<dependency>
+				<groupId>nl.bitwalker</groupId>
+				<artifactId>UserAgentUtils</artifactId>
+				<version>${user.agent.utils.version}</version>
+			</dependency>
+			<!-- guava扩展集合工具组件 -->
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
+			<!-- mysql -->
+			<!-- <dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+			</dependency> -->
+			<!-- servlet -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${javax.servlet-api.version}</version>
+				<scope>provided</scope>
+			</dependency>
+	    	<!--slf4j 和其依赖-->
+			<!-- <dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jul-to-slf4j</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+			</dependency>
+			<dependency>
+	            <groupId>org.slf4j</groupId>
+	            <artifactId>log4j-over-slf4j</artifactId>
+        	</dependency> -->
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+				<exclusions>
+				    <exclusion>
+				        <groupId>com.sun.jmx</groupId>
+				        <artifactId>jmxri</artifactId>
+				    </exclusion>
+				    <exclusion>
+				        <groupId>com.sun.jdmk</groupId>
+				        <artifactId>jmxtools</artifactId>
+				    </exclusion>
+				    <exclusion>
+				            <groupId>javax.jms</groupId>
+				            <artifactId>jms</artifactId>
+				    </exclusion>
+				</exclusions>
+			</dependency>
+			<!-- httpclient -->
+			<!-- <dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient-cache</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpcore</artifactId>
+			</dependency> -->
+	    	<!-- zookeeper jar begin -->
+			<dependency>
+				<groupId>org.apache.zookeeper</groupId>
+				<artifactId>zookeeper</artifactId>
+				<version>${zookeeper.version}</version>
+				<exclusions>
+			        <exclusion>
+			            <groupId>org.slf4j</groupId>
+			            <artifactId>slf4j-log4j12</artifactId>
+			        </exclusion>
+			    </exclusions>
+			</dependency>
+			<dependency>
+				<groupId>com.101tec</groupId>
+				<artifactId>zkclient</artifactId>
+				<version>${zkclient.version}</version>
+				<exclusions>
+			        <exclusion>
+			            <groupId>org.slf4j</groupId>
+			            <artifactId>slf4j-log4j12</artifactId>
+			        </exclusion>
+			    </exclusions>
+			</dependency>
+	  		<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-framework</artifactId>
+				<version>${curator.version}</version>
+			</dependency>
+	  		<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-recipes</artifactId>
+				<version>${curator.version}</version>
+			</dependency>
+			<!-- zookeeper jar end -->
+			<!-- dubbo jar begin -->
+	        <dependency>
+	            <groupId>com.alibaba</groupId>
+	            <artifactId>dubbo</artifactId>
+	            <version>${dubbo.version}</version>
+	            <exclusions>
+	                <exclusion>
+	                    <artifactId>spring</artifactId>
+	                    <groupId>org.springframework</groupId>
+	                </exclusion>
+            	</exclusions>
+	        </dependency>
+	        <!--rest 规范，比如 Get, Path, MediaType 等-->
+	        <dependency>
+	            <groupId>javax.ws.rs</groupId>
+	            <artifactId>javax.ws.rs-api</artifactId>
+	            <version>${ws.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.jboss.resteasy</groupId>
+	            <artifactId>resteasy-jaxrs</artifactId>
+	            <version>${resteasy.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.jboss.resteasy</groupId>
+	            <artifactId>resteasy-client</artifactId>
+	            <version>${resteasy.version}</version>
+	        </dependency>
+	        <!-- 如果要使用netty server -->
+	        <dependency>
+	            <groupId>org.jboss.resteasy</groupId>
+	            <artifactId>resteasy-netty</artifactId>
+	            <version>${resteasy.version}</version>
+	        </dependency>
+	        <!-- 如果要使用Sun HTTP server -->
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-jdk-http</artifactId>
+				<version>${resteasy.version}</version>
+			</dependency>
+	        <!-- 如果要使用json序列化 -->
+	        <dependency>
+	            <groupId>org.jboss.resteasy</groupId>
+	            <artifactId>resteasy-jackson-provider</artifactId>
+	            <version>${resteasy.version}</version>
+	        </dependency>
+	        <!-- 如果要使用xml序列化 -->
+	        <dependency>
+	            <groupId>org.jboss.resteasy</groupId>
+	            <artifactId>resteasy-jaxb-provider</artifactId>
+	            <version>${resteasy.version}</version>
+	        </dependency>
+	        <!-- hessian序列化 -->
+	        <dependency>
+		        <groupId>com.caucho</groupId>
+		        <artifactId>hessian</artifactId>
+		        <version>${hessian.version}</version>
+		    </dependency>
+	        <!-- 如果要使用Kyro序列化 -->
+	        <dependency>
+	            <groupId>com.esotericsoftware.kryo</groupId>
+	            <artifactId>kryo</artifactId>
+	            <version>${kryo.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>de.javakaffee</groupId>
+	            <artifactId>kryo-serializers</artifactId>
+	            <version>${kryo-serializers.version}</version>
+	        </dependency>
+	        <!-- 如果要使用FST序列化 -->
+	        <dependency>
+	            <groupId>de.ruedigermoeller</groupId>
+	            <artifactId>fst</artifactId>
+	            <version>${fst.version}</version>
+	        </dependency>
+	        <!-- dubbo jar end -->
+	        <!-- mybatis -->
+	        <dependency>
+			    <groupId>org.mybatis.spring.boot</groupId>
+			    <artifactId>mybatis-spring-boot-starter</artifactId>
+			    <version>${mybatis.spring.boot.version}</version>
+			</dependency>
+	        <!-- druid -->
+	        <dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid-spring-boot-starter</artifactId>
+				<version>${druid.version}</version>
+			</dependency>
+			<!-- lombok -->
+			<!-- <dependency>
+			    <groupId>org.projectlombok</groupId>
+			    <artifactId>lombok</artifactId>
+			    <scope>provided</scope>
+			</dependency> -->
+			<!-- json-b -->
+			<dependency>
+		        <groupId>javax.json.bind</groupId>
+		        <artifactId>javax.json.bind-api</artifactId>
+		        <version>${json.bind.version}</version>
+		    </dependency>
+			<dependency>
+		        <groupId>org.eclipse</groupId>
+		        <artifactId>yasson</artifactId>
+		        <version>${yasson.version}</version>
+		    </dependency>
+		    <dependency>
+		        <groupId>org.glassfish</groupId>
+		        <artifactId>javax.json</artifactId>
+		        <version>${glassfish.version}</version>
+		        <exclusions>
+		        	<exclusion>
+		        		<groupId>org.glassfish.jersey.bundles.repackaged</groupId>
+    					<artifactId>jersey-guava</artifactId>
+		        	</exclusion>
+		        </exclusions>
+		    </dependency>
+		    <!-- swagger -->
+		    <dependency>
+			    <groupId>io.springfox</groupId>
+			    <artifactId>springfox-swagger2</artifactId>
+			    <version>${springfox-swagger.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>com.github.caspar-chen</groupId>
+			    <artifactId>swagger-ui-layer</artifactId>
+			    <version>${swagger-ui-layer.version}</version>
+			</dependency>
+			<!-- quartz -->
+			<dependency>
+	            <groupId>org.quartz-scheduler</groupId>
+	            <artifactId>quartz</artifactId>
+	            <version>${quartz.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.quartz-scheduler</groupId>
+	            <artifactId>quartz-jobs</artifactId>
+	            <version>${quartz.version}</version>
+	        </dependency>
+		</dependencies>
+	</dependencyManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven.enforcer.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>enforce</id>
+                        <configuration>
+                            <rules>
+                                <DependencyConvergence/>
+                            </rules>
+                        </configuration>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

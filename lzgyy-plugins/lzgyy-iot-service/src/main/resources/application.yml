@@ -1,0 +1,40 @@
+spring:
+        profiles:
+                active: test
+                
+logging:
+        level:
+                root: info
+                com.lzgyy.plugins.iot: debug
+---
+# 测试环境
+spring:
+        profiles: test
+        mqtt:
+                broker:
+                        # 其它配置
+                        id: lzgyy-iot-broker-1 # Broker唯一标识
+                        # netty 服务器端配置
+                        server-port: 8883  # [netty]服务器端口号
+                        websocket-server-port: 9995 # [netty]WebSocket服务器端口号
+                        websocket-path: /mqtt # [netty]WebSocket Path值, 默认值/mqtt
+                        reader-idle-time-seconds: 60 #  [netty] IdleStateHandler心跳检测器,读超时时间，单位秒
+                        use-epoll: false # [netty] 是否开启Epoll模式, 默认关闭
+                        so-backlog: 511 #  [netty] Sokcet参数, 存放已完成三次握手请求的队列最大长度, 默认511长度
+                        so-keep-alive: true # [netty] Socket参数, 是否开启心跳保活机制, 默认开启
+                        # ssl配置
+                        is-ssl: true # [ssl]使用ssl加密
+                        jks-file:  keystore/server.jks # [ssl] 加密 jks文件地址
+                        jks-store-pass: 6655443322119 # [ssl] 加密jks目标源存储库口令，storepass指定密钥库的密码
+                        jks-key-pass: 6655443322118 # [ssl] 加密jks目标密钥库口令
+                        auth-private-key-file: keystore/auth-private.key # [ssl] 权限私钥加密路径（供加密用户密码使用）
+                        # apache ignite缓存配置
+                        enable-multicast-group: false # [apache ignite] 集群配置, 是否基于组播发现, 默认开启
+                        multicast-group: 127.0.0.1 # [apache ignite] 集群配置, 基于组播发现
+                        static-ip-addresses: 127.0.0.1 # [apache ignite] 集群配置, 当组播模式禁用时, 使用静态IP开启配置集群
+                        cache:
+                                persistence-initial-size: 64 # [apache ignite]（非必输）持久化缓存内存初始化大小(MB), 默认值: 64
+                                persistence-max-size: 128 # [apache ignite]（非必输）持久化缓存占用内存最大值(MB), 默认值: 128
+                                persistence-store-path: /opt/lzgyy-iot-broker/persistence # [apache ignite] 持久化磁盘存储路径
+                                not-persistence-initial-size: 64  # [apache ignite]（非必输）非持久化缓存内存初始化大小(MB), 默认值: 64
+                                not-persistence-max-size: 128 # [apache ignite]（非必输）非持久化缓存占用内存最大值(MB), 默认值: 128

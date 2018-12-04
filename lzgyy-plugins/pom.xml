@@ -1,0 +1,19 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.lzgyy</groupId>
+    <artifactId>lzgyy</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>lzgyy-plugins</artifactId>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>lzgyy-quartz-plugin</module>
+  	<module>lzgyy-elasticsearch-plugin</module>
+  	<module>lzgyy-redis-interf</module>
+  	<module>lzgyy-redis-service</module>
+  	<module>lzgyy-iot-core</module>
+  	<module>lzgyy-iot-client</module>
+  	<module>lzgyy-iot-service</module>
+  </modules>
+</project>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+	<!-- 生产者配置 -->
+	<!-- 提供方应用信息，用于计算依赖关系 --> 
+    <dubbo:application name="${dubbo.applicationName}" owner="lzcx" organization="dubbo"/>
+
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+    <dubbo:registry address="${dubbo.registry.address}"/>
+
+    <dubbo:annotation package="com.lzgyy.platform" />
+    
+    <!-- kryo实现序列化 -->
+    <dubbo:protocol name="dubbo" port="${dubbo.port}" serialization="kryo" optimizer="com.lzgyy.platform.serial.SerializationOptimizerImpl"/>
+   	
+    <!-- 统一生产者配置 -->
+    <dubbo:provider timeout="30000" retries="0" token="true" version="1.0.0" owner="lzcx"/>
+   
+	<!-- rest -->
+	<!-- 在标准JAX-RS应用中，我们一般是为Filter和Interceptor添加@Provider annotation，
+	然后JAX-RS runtime会自动发现并启用它们。而在dubbo中，我们是通过添加XML配置的方式来注册Filter和Interceptor： -->
+    <dubbo:protocol name="rest" server="${dubbo.rest.server}" port="${dubbo.rest.port}" 
+    	contextpath="${dubbo.rest.contextpath}" threads="${dubbo.rest.threads}" accepts="${dubbo.rest.accepts}" 
+    	/>
+    	
+    	<!-- extension="com.lzcx.common.filter.CacheControlFilter,
+    			   com.lzcx.common.filter.LoggingFilter,
+    			   com.lzcx.common.interceptor.GZIPWriterInterceptor,
+    			   " -->
+	
+     
+   	<!-- 具体的实现bean -->
+	<!--
+	<bean id="userService" class="com.lzcx.modules.sys.service.UserService" />
+	--> 
+	<!-- 声明需要暴露的服务接口,同时提供本地dubbo方法调用和rest方法调用 -->
+	<!-- 
+	<dubbo:service interface="com.lzcx.modules.sys.facade.user.UserFacade" ref="userService" protocol="rest,dubbo" version="1.0"  timeout="6000"/> 
+	-->
+	<dubbo:service interface="com.lzgyy.platform.modules.test.service.TestService" ref="testService" protocol="dubbo" />
+	
+	
+</beans>

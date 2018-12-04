@@ -1,0 +1,13 @@
+1）生成服务端证书
+	为服务器生成自签名证书
+	keytool -genkey -alias securechat -keysize 2048 -validity 365 -keyalg RSA -dname "CN=localhost" -keypass sNetty -storepass sNetty -keystore sChat.jks
+	
+	keytool -export -alias securechat -keystore sChat.jks -storepass sNetty -file sChat.cer
+	
+2）生成客户端证书
+	keytool -genkey -alias smcc -keysize 2048 -validity 365 -keyalg RSA -dname "CN=localhost" -keypass cNetty -storepass cNetty -keystore cChat.jks
+	
+	keytool -import -trustcacerts -alias securechat -file ../server\sChat.cer -storepass cNetty -keystore cChat.jks
+	
+所有者: CN=localhost
+发布者: CN=localhost

@@ -1,0 +1,8 @@
+# 多环境配置
+spring : 
+  profiles :
+    active : dev
+    #active : prod
+    #active : test
+  other :
+    config : cache

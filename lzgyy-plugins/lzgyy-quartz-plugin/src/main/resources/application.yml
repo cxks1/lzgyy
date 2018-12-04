@@ -1,0 +1,21 @@
+########### Quartz调度中心 ##########
+quartz:
+  enabled: true
+server:
+  port: 9090
+spring:
+  application:
+    name: Spring-Quartz-Scheduler
+  datasource:
+    url: jdbc:mysql://localhost:3306/yourdatabase
+    username: yourname
+    password: yourpass
+    tomcat:
+      initialSize: 20
+      maxActive: 100
+      maxIdle: 100
+      minIdle: 20
+      maxWait: 10000
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false

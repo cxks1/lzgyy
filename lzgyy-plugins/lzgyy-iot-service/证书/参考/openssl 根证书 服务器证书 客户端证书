@@ -1,0 +1,26 @@
+1、生成根证书，生成两个文件 root.key 和root.crt文件
+	用于签名服务器端证书和客户端证书
+	openssl req -new -x509 -nodes -days 3650 -newkey rsa:2048 -keyout ${PATH}/lzgyy_root.key -out ${PATH}/lzgyy_root.crt -config /etc/pki/tls/openssl.cnf
+
+2、为服务器证书生成私钥文件
+	openssl genrsa -out ${PATH}lzgyy_server.key 2048
+
+3、为服务器证书生成CSR证书签名请求
+	openssl req -new -key ${PATH}/lzgyy_server.key -out ${PATH}/lzgyy_server.csr -config /etc/pki/tls/openssl.cnf
+
+4、使用根证书签名服务器CSR，生成服务器证书。
+	openssl ca -in ${PATH}/lzgyy_server.csr  -out ${PATH}/lzgyy_server.crt -cert ${PATH}/lzgyy_root.crt  -keyfile ${PATH}/lzgyy_root.key  -config /etc/pki/tls/openssl.cnf
+
+5、为用户张三生成私钥
+	openssl genrsa -out ${PATH}/zhangsan.key 2048
+	
+6、为用户张三生成证书签名请求
+	openssl req -new -utf8 -key ${PATH}/lzgyy_zhangsan.key -out ${PATH}/lzgyy_zhangsan.csr -config /etc/pki/tls/openssl.cnf
+
+7、使用根证书签名张三CSR
+	openssl ca -in ${PATH}/lzgyy_zhangsan.csr  -out ${PATH}/lzgyy_zhangsan.crt -cert ${PATH}/lzgyy_root.crt -keyfile ${PATH}/lzgyy_root.key  -config /etc/pki/tls/openssl.cnf
+	
+将用户张三的公钥和私钥导出为p12格式证书，并启用私钥密码保护。
+	openssl pkcs12 -export  -in /etc/nginx/ssl/zhangsan.crt  -inkey /etc/nginx/ssl/zhangsan.key -out /etc/nginx/ssl/zhangsan.p12
+	Enter Export Password:
+	Verifying - Enter Export Password:

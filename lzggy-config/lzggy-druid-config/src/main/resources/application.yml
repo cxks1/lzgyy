@@ -1,0 +1,8 @@
+########### druid ##########
+druid :
+  access :
+    whitelist :
+    username : root
+    password : root
+    logSlowSql : true
+    resetEnable : false

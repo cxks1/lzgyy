@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzgyy.plugins.quartz.mapper.JobMapper">
+  <!-- 新增数据 -->
+  <insert id="insert" parameterType="com.lzgyy.plugins.quartz.entity.JobEntity">
+		INSERT INTO job_entity(
+			id,
+			name,
+			group,
+			cron,
+			parameter,
+			description,
+			vmParam,
+			jarPath,
+			status
+		)
+		VALUE
+		(
+			#{id},
+			#{name},
+			#{group},
+			#{cron},
+			#{parameter},
+			#{description},
+			#{vmParam},
+			#{jarPath},
+			#{status}
+		)
+	</insert>
+	
+	<!-- 更新数据 -->
+	<update id="update" parameterType="com.lzgyy.plugins.quartz.entity.JobEntity">
+		 UPDATE job_entity
+			 <trim prefix="SET" suffixOverrides=",">
+			  	<if test="name !=null">name =#{name},</if>
+			  	<if test="group !=null">group =#{group},</if>
+			  	<if test="cron !=null">cron =#{cron},</if>
+			  	<if test="parameter !=null">parameter =#{parameter},</if>
+			  	<if test="description !=null">description =#{description},</if>
+			  	<if test="vmParam !=null">vmParam =#{vmParam},</if>
+			  	<if test="jarPath !=null">jarPath =#{jarPath},</if>
+			  	<if test="status !=null">status =#{status},</if>
+			 </trim>
+		 WHERE id=#{id}
+	</update>
+	
+	<!-- 查询分页条件 -->
+	<select id="pageListWhere">
+		<where>
+			<if test="id != '' and id != null">
+				AND id =#{id}
+			</if>
+			<if test="name != '' and name != null">
+				AND name like concat('%',#{name},'%')
+			</if>
+			<if test="group != '' and group != null">
+				AND group =#{group}
+			</if>
+			<if test="cron != '' and cron != null">
+				AND cron = #{cron}
+			</if>
+			<if test="parameter != '' and parameter != null">
+				AND parameter =#{parameter}
+			</if>
+			<if test="description != '' and description != null">
+				AND description =#{description}
+			</if>
+			<if test="vmParam != '' and vmParam != null">
+				AND vmParam =#{vmParam}
+			</if>
+			<if test="jarPath != '' and jarPath != null">
+				AND jarPath =#{jarPath}
+			</if>
+			<if test="status != '' and status != null">
+				AND status =#{status}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询分页列表数据 -->
+	<select id="getList" parameterType="java.util.Map" resultType="com.lzgyy.plugins.quartz.entity.JobEntity">
+		SELECT
+			id,
+			name,
+			group,
+			cron,
+			parameter,
+			description,
+			vmParam,
+			jarPath,
+			status,
+		FROM job_entity
+		<include refid="pageListWhere"/>
+		ORDER BY id DESC
+		LIMIT #{startSize}, #{limitSize}
+	</select>
+	
+	<!-- 查询分页总条数 -->
+	<select id="getTotal" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM job_entity
+		<include refid="pageListWhere"/>
+	</select>
+	
+	<!-- 逻辑删除多条 -->
+	<update id="deleteIds">
+		UPDATE job_entity SET
+			deleteState = '0'
+		WHERE
+			id in
+		<foreach collection="list" item="id" index="index" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+	
+	<!-- 物理删除多条 -->
+	<delete id="deleteIdsPhysical">
+		DELETE FROM job_entity   
+		WHERE id IN
+		<foreach collection="list" item="id" index="index" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<!-- 恢复数据为正常状态 -->
+	<update id="updateIdsRestore">
+		UPDATE job_entity SET  
+			deleteState = '1'
+		WHERE
+			id IN
+		<foreach collection="list" item="id" index="index" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+	
+</mapper>

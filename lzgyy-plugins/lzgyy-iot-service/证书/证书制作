@@ -1,0 +1,146 @@
+一、构建根证书，生成CA证书目前不使用第三方权威机构的CA来认证，自己充当CA的角色 
+	1.1 构建根证书私钥（生成服务端私钥(可以给商户客户)）
+	openssl genrsa -out /usr/local/2/root-key.pem 2048
+		各参数含义
+		genrsa  --产生rsa密钥命令
+		-desc：表示生成的key是有密码保护的（注：如果是将生成的key与server的证书一起使用，最好不需要密码，就是不要这个参数，否则其它人就会在请求的时候每次都要求输入密码）
+		-out：后面的参数表示生成的key的输入文件，root-key.pem
+		2048：表示的是生成key的大小，单为字节(bits)
+		完成密钥构建操作后，需要生成根证书签发申请文件(ca.csr)
+	1.2 生成根证书签发申请
+	openssl req -new -key /usr/local/2/root-key.pem -passin pass:qazwsx -out /usr/local/2/root-req.csr -subj "/C=CN/ST=GD/L=SZ/O=COM/OU=NSP/CN=CA/emailAddress=564263820@qq.com"
+	（root-key.pem）密码： qazwsx
+		各参数含义
+		req--产生证书签发申请命令
+		-new--表示新请求
+		-key--根证书私钥，这里为root-key.pem文件
+		-out--输出路径，root-req.csr
+		-subj--指定用户信息，这里使用泛域名"*.xx.org"作为用户名
+		得到根证书生签发申请之后我们可以将其发送给CA机构签发，当然我们也可以自行签发根证书
+	1.1-1.2合并
+		openssl req -newkey rsa:2048 -passout pass:qazwsx -keyout /usr/local/2/root-key.pem -out /usr/local/2/root-req.csr -subj "/C=CN/ST=GD/L=SZ/O=COM/OU=NSP/CN=CA/emailAddress=564263820@qq.com"
+		（root-key.pem）密码： qazwsx
+	1.3 签发根证书 
+	openssl x509 -req -days 3650 -signkey /usr/local/2/root-key.pem -in /usr/local/2/root-req.csr -passin pass:qazwsx -out /usr/local/2/root-cert.pem  
+		使用（root-req.csr）密码：qazwsx
+		各参数含义
+		x509--签发X.509格式证书命令
+		-req--表示证书输入请求
+		-days--表示有效天数 3650
+		-signkey--表示自签名根证书私钥，root-key.pem
+		-in--表示输入文件，这里为root-req.csr
+		-out--表示输出文件，root-cert.pem
+		这里我们需要输入根证书密码 
+		=======================第一部分，没有需要转换的情况下，到此为止==========================
+		openssl产生的数字证书不能在java语言环境中直接使用，需要将其转化为PKCS#12编码完整命令
+	1.4 根证书转换为PKCS#12格式	
+	openssl pkcs12 -export -clcerts -inkey /usr/local/2/root-key.pem -passin pass:qazwsx -in /usr/local/2/root-cert.pem -out /usr/local/2/root-cert.p12 -passout pass:1qaz2wsx
+	（root-cert.p12）密码： 1qaz2wsx
+		各参数含义
+		pkcs12--PKCS#112编码格式证书命令
+		-export --表示导出证书
+		-cacerts--表示仅导出CA证书
+		-inkey--表示输入密钥，根证书私钥，root-key.pem
+		-in--表示输入文件，这里指的是root-cert.pem
+		-out --表示输出文件，这里为root-cert.p12
+		这里我们需要输入根证书密码
+		个人信息交换文件(PKCS#12)可以作为密钥库或新任库使用，我们可以通过keytool查看该密钥库的详细信息
+	1.5 使用keytool查密钥库信息
+	keytool -list -keystore /usr/local/2/root-cert.p12 -storetype pkcs12 -v -storepass 1qaz2wsx
+		现在我们已经构建了根证书(ca.cer) 我们可以使用根证书签发服务器证书和客户端证书
+	1.6 根证书转换为PKCS#12格式，根据root根证书生成jks文件
+	keytool -import -v -trustcacerts -storepass 11qqaazz -alias root -file /usr/local/2/root-cert.pem -keystore /usr/local/2/root-cert.jks
+	密码：11qqaazz
+二、生成server证书，构建服务器证书
+	服务器证书的构建与根证书构建相似
+	2.1 构建服务器私钥
+	openssl genrsa -out /usr/local/2/server-key.pem 2048
+	2.2 生成服务器证书签发申请 
+	openssl req -new -out /usr/local/2/server-req.csr -key /usr/local/2/server-key.pem -passin pass:654321 -subj "/C=CN/ST=GD/L=SZ/O=COM/OU=NSP/CN=SERVER/emailAddress=564263820@qq.com"
+	（server-key.pem）密码： 654321
+	2.1-2.2合并
+		openssl req -newkey rsa:2048 -passout pass:654321 -keyout /usr/local/2/server-key.pem -out /usr/local/2/server-req.csr -subj "/C=CN/ST=GD/L=SZ/O=COM/OU=NSP/CN=SERVER/emailAddress=564263820@qq.com"
+		（server-key.pem）密码：654321
+	2.3 签发服务器证书
+	openssl x509 -req -CAcreateserial -days 3650 -signkey /usr/local/2/server-key.pem -CA /usr/local/2/root-cert.pem -CAkey /usr/local/2/root-key.pem -in /usr/local/2/server-req.csr -out /usr/local/2/server-cert.pem
+		使用（server-key.pem）密码：654321
+		使用（root-key.pem）密码：qazwsx
+		各参数含义
+		-extensions -- 表示证书按openssl配置文件v3_req项添加扩展
+		-CA -- 表示CA证书，这里为certs/ca.ce
+		-CA -- 表示CA证书，这里为certs/ca.ce
+		-CAserial -- 表示CA证书序列号文件
+		-CAcreateserial -- 表示创建CA证书序列号
+		-in 表示输入文件
+		-out -- 表示输出文件
+		同样我们需要将openssl产生的数字证书转换为PKCS#12编码格式
+	2.4 服务器证书转换为PKCS#12格式
+	openssl pkcs12 -export -clcerts -in /usr/local/2/server-cert.pem -inkey /usr/local/2/server-key.pem -out /usr/local/2/server.p12 -name "server"
+		使用（server-key.pem）密码： 654321
+		密码： 665544332211
+		各参数含义
+		-inkey -- 表示输入密钥
+		-clcerts -- 表示仅导出客户证书
+		-export --表示导出证书
+		-name --起别名
+		现在我已经构建了服务器证书并可使用该证书构建基于单向认证的网络交互平台
+		
+三、生成client证书，构建客户端证书
+	3.1 构建私钥
+	openssl genrsa -out /usr/local/2/client-key.pem 2048
+	3.2 构建客户端证书签发申请
+	openssl req -new -key /usr/local/2/client-key.pem -out /usr/local/2/client-req.csr -subj "/C=CN/ST=GD/L=SZ/O=COM/OU=NSP/CN=CLIENT/emailAddress=564263820@qq.com"
+	3.1-3.2合并
+		openssl req -newkey rsa:2048 -keyout /usr/local/2/client-key.pem -out /usr/local/2/client-req.csr -subj "/C=CN/ST=GD/L=SZ/O=COM/OU=NSP/CN=CLIENT/emailAddress=564263820@qq.com"
+	3.3 签发客户端证书
+	openssl x509 -req -days 3650 -signkey /usr/local/2/client-key.pem -CA /usr/local/2/root-cert.pem -CAkey /usr/local/2/root-key.pem -CAcreateserial -in /usr/local/2/client-req.csr -out /usr/local/2/client-cert.pem
+	使用（root-key.pem）密码：qazwsx
+	3.4 客户端证书转换为PKCS#12格式
+	openssl pkcs12 -export -clcerts -in /usr/local/2/client-cert.pem -inkey /usr/local/2/client-key.pem -out /usr/local/2/client.p12 -name "client"
+	密码：123456
+		
+四、其它
+	pem转jks
+		4.1 服务器端
+		4.1.1 创建keystore
+		     keytool -importkeystore -srcstoretype PKCS12 -srckeystore server.p12 -srcstorepass yourPKCS12pass -alias server -deststorepass yourJKSpass -destkeypass yourKeyPass -destkeystore MyDSKeyStore.jks
+		例子：keytool -importkeystore -srcstoretype PKCS12 -srckeystore /usr/local/2/server.p12 -srcstorepass 665544332211 -alias server -deststorepass 6655443322119 -destkeypass 6655443322118 -destkeystore /usr/local/2/server.jks
+	 	各参赛含义
+	 	-importkeystore 指示导入导出keystore文件，可用于同类型或不同类型的导入导出
+	 	-srcstoretype 指示源store类型(jks/pkcs12..)
+	 	-srckeystore 指示源keystore文件
+	 	-srcstorepass 源存储库口令（密码：665544332211）
+	 	-srcalias 指示源实体别名
+	 	-alias 指示源实体别名
+	 	-deststorepass 目标源存储库口令（密码：6655443322119）
+	 	-destkeypass 目标密钥库口令（密码：6655443322118）
+	 	如出现keytool error: java.lang.Exception: Alias <server> does not exist错误，需要在2.4步骤起别名
+	 	4.1.2 从服务端keystore中导出通用格式的证书,以备导入到客户端keystore
+	 		keytool -export -keystore /usr/local/2/server.jks -storetype jks -storepass 6655443322119 -alias server -file /usr/local/2/server_rsa.cer
+	 	4.1.3 导入服务端证书到客户端keystore(此动作的后果是使客户端信任服务端)
+	 		keytool -import -noprompt -keystore /usr/local/2/client.jks -storetype jks -storepass 112233445566 -alias server -file /usr/local/2/server_rsa.cer
+	 	4.1.4 列出服务端keystore包含的信息供查看
+	 		keytool -list -keystore /usr/local/2/server.jks -storepass 6655443322119 -v
+	 		
+	 	4.2客户端
+	 	4.2.1创建keystore
+	 		keytool -importkeystore -srcstoretype PKCS12 -srckeystore /usr/local/2/client.p12 -srcstorepass 123456 -alias client -deststorepass 112233445566 -destkeypass 1122334455668 -destkeystore /usr/local/2/client.jks
+	 	各参赛含义
+	 	-importkeystore 指示导入导出keystore文件，可用于同类型或不同类型的导入导出
+	 	-srcstoretype 指示源store类型(jks/pkcs12..)
+	 	-srckeystore 指示源keystore文件
+	 	-srcstorepass 源存储库口令（密码：123456）
+	 	-srcalias 指示源实体别名
+	 	-alias 指示源实体别名
+	 	-deststorepass 目标源存储库口令（密码：112233445566）
+	 	-destkeypass 目标密钥库口令（密码：1122334455668）
+	 	4.2.2 从客户端keystore中导出通用格式的证书,以备导入到服务端keystore
+	 		keytool -export -keystore /usr/local/2/client.jks -storetype jks -storepass 112233445566 -alias client -file /usr/local/2/client_rsa.cer
+	 	4.2.3 导入客户端证书到服务端keystore(此动作的后果是使服务端信任客户端)
+	 		keytool -import -noprompt -keystore /usr/local/2/server.jks -storetype jks -storepass 6655443322119 -alias client -file /usr/local/2/client_rsa.cer
+	 	4.1.4 列出客户端keystore包含的信息供查看
+	 		keytool -list -keystore /usr/local/2/client.jks -storepass 112233445566 -v
+	 		
+免费证书申请地址 www.cacert.org
+
+参考资料：https://www.cnblogs.com/lan1x/p/5872915.html

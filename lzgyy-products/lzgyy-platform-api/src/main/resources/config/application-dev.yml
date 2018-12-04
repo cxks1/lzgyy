@@ -1,0 +1,42 @@
+########### 开发环境 ##########
+# tomcat
+server :
+  port : 9999
+  tomcat :
+    min-spare-threads : 30
+    max-threads : 800
+    connection-timeout : 5000
+    uri-encoding : UTF-8
+
+# dubbo
+dubbo :
+  port : 20992
+  applicationName : lzgyy-platform-api
+  registry :
+    address : zookeeper://192.168.0.114:2181
+  timeout : 60000
+
+# spring
+spring:
+  application:
+    name : lzgyy-platform
+  http :
+    encoding :
+      charset : UTF-8
+      enabled : true
+      force : true
+  messages :
+    encoding : UTF-8
+
+# logging
+logging :
+  level :
+    com :
+      evisible : 
+        blockchain :
+          dealfee : DEBUG
+
+# banner
+banner :
+  charset : UTF-8
+  location : classpath:config/banner.txt

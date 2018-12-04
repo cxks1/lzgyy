@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+	<!-- 消费者配置 -->
+	<!-- 消费服务名称 -->
+    <dubbo:application name="${dubbo.applicationName}" owner="lzcx" organization="dubbo"/>
+
+	<!-- zookeeper注册中心 -->
+	<dubbo:registry timeout="${dubbo.timeout}" address="${dubbo.registry.address}"/>
+    
+    <!-- 扫描dubbo注解位置 -->
+    <dubbo:annotation package="com.lzgyy.platform"/>
+    
+    <!-- kryo实现序列化  -->
+    <dubbo:protocol name="dubbo" port="${dubbo.port}" serialization="kryo" optimizer="com.lzgyy.platform.serial.SerializationOptimizerImpl"/>
+
+	<!--统一的消费者配置-->
+	<dubbo:consumer timeout="60000" retries="0" version="1.0.0" owner="lzcx"/>
+	
+	<!-- 生成远程服务接口配置 -->
+	<!-- 服务调用超时设置为6秒,超时不重试 -->
+	<dubbo:reference id="testService" interface="com.lzgyy.platform.modules.test.service.TestService"/>
+	
+</beans>

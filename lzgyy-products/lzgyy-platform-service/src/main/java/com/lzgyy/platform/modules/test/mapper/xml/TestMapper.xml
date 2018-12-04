@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzgyy.platform.modules.test.mapper.TestMapper">
+  <!-- 测试 -->
+  <!-- 新增数据 -->
+  <insert id="insert" parameterType="com.lzgyy.platform.modules.test.entity.Test">
+		INSERT INTO test(
+			id,
+			name,
+			createUser,
+			createDate,
+			updateUser,
+			updateDate,
+			deleteState
+		)
+		VALUE
+		(
+			#{id},
+			#{name},
+			#{createUser},
+			#{createDate},
+			#{updateUser},
+			#{updateDate},
+			#{deleteState}
+		)
+	</insert>
+	
+	<!-- 更新数据 -->
+	<update id="update" parameterType="com.lzgyy.platform.modules.test.entity.Test">
+		 UPDATE test
+			 <trim prefix="SET" suffixOverrides=",">
+			  	<if test="name !=null">name =#{name},</if>
+			  	<if test="createUser !=null">createUser =#{createUser},</if>
+			  	<if test="createDate !=null">createDate =#{createDate},</if>
+			  	<if test="updateUser !=null">updateUser =#{updateUser},</if>
+			  	<if test="updateDate !=null">updateDate =#{updateDate},</if>
+			  	<if test="deleteState !=null">deleteState =#{deleteState},</if>
+			 </trim>
+		 WHERE id=#{id}
+	</update>
+	
+	<!-- 查询分页条件 -->
+	<select id="pageListWhere">
+		<where>
+			<if test="id != '' and id != null">
+				AND id =#{id}
+			</if>
+			<if test="name != '' and name != null">
+				AND name like concat('%',#{name},'%')
+			</if>
+			<if test="createUser != '' and createUser != null">
+				AND createUser =#{createUser}
+			</if>
+			<if test="createDate != '' and createDate != null">
+				AND createDate = #{createDate}
+			</if>
+			<if test="updateUser != '' and updateUser != null">
+				AND updateUser =#{updateUser}
+			</if>
+			<if test="updateDate != '' and updateDate != null">
+				AND updateDate =#{updateDate}
+			</if>
+			<if test="deleteState != '' and deleteState != null">
+				AND deleteState =#{deleteState}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询分页列表数据 -->
+	<select id="getList" parameterType="java.util.Map" resultType="com.lzgyy.platform.modules.test.entity.Test">
+		SELECT
+			id,
+			name,
+			createUser,
+			createDate,
+			updateUser,
+			updateDate,
+			deleteState
+		FROM test
+		<include refid="pageListWhere"/>
+		ORDER BY createDate DESC
+		LIMIT #{startSize}, #{limitSize}
+	</select>
+	
+	<!-- 查询分页总条数 -->
+	<select id="getTotal" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM test
+		<include refid="pageListWhere"/>
+	</select>
+	
+	<!-- 逻辑删除多条 -->
+	<update id="deleteIds">
+		UPDATE test SET
+			deleteState = '0'
+		WHERE
+			id in
+		<foreach collection="list" item="id" index="index" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+	
+	<!-- 物理删除多条 -->
+	<delete id="deleteIdsPhysical">
+		DELETE FROM test   
+		WHERE id IN
+		<foreach collection="list" item="id" index="index" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<!-- 恢复数据为正常状态 -->
+	<update id="updateIdsRestore">
+		UPDATE test SET  
+			deleteState = '1'
+		WHERE
+			id IN
+		<foreach collection="list" item="id" index="index" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+	
+</mapper>

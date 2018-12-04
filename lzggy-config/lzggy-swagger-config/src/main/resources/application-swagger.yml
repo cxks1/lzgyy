@@ -1,0 +1,9 @@
+########### swagger ##########
+swagger :
+  title : 工业云平台数据接口文档
+  description : 文档描述
+  version :  1.0.0
+  termsOfServiceUrl : API TERMS URL
+  contact : 联系人邮箱
+  license : license
+  licenseUrl : license url

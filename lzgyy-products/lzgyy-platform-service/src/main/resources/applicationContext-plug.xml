@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd ">
+
+	<description>applicationContext文件插件列表</description>
+
+	<import resource="spring/spring-tx.xml" /> 	 	 			 <!-- 配置单数据源事务 -->
+	<import resource="mybatis/applicationContext-mybatis.xml" /> <!-- 配置mybatis配置 -->
+	<import resource="spring/dubbo-provider.xml" />				 <!-- 配置dubbo生产者服务 -->
+	
+</beans>
