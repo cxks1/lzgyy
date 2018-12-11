@@ -40,7 +40,7 @@
 	</update>
 	
 	<!-- 查询分页条件 -->
-	<select id="pageListWhere">
+	<sql id="pageListWhere">
 		<where>
 			<if test="id != '' and id != null">
 				AND id =#{id}
@@ -64,7 +64,7 @@
 				AND deleteState =#{deleteState}
 			</if>
 		</where>
-	</select>
+	</sql>
 	
 	<!-- 查询分页列表数据 -->
 	<select id="getList" parameterType="java.util.Map" resultType="com.lzgyy.platform.modules.test.entity.Test">
