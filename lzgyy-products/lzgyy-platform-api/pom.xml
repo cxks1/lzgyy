@@ -9,7 +9,7 @@
   <dependencies>
   		<dependency>
 			<groupId>com.lzgyy</groupId>
-			<artifactId>lzggy-swagger-config</artifactId>
+			<artifactId>lzgyy-swagger-config</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
   		<dependency>

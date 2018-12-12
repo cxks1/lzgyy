@@ -27,7 +27,7 @@ spring:
     name : lzgyy-platform
   datasource :
     type : com.alibaba.druid.pool.DruidDataSource
-    url : jdbc:mysql://114.215.71.72:3306/lzgyy-platform?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=true
+    url : jdbc:mysql://192.168.0.114:3306/lzgyy-platform?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=true
     username : root
     password : root
     driverClassName : com.mysql.jdbc.Driver

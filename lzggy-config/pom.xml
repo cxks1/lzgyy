@@ -6,12 +6,12 @@
 		<artifactId>lzgyy</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>lzggy-config</artifactId>
+	<artifactId>lzgyy-config</artifactId>
 	<packaging>pom</packaging>
 	<modules>
-		<module>lzggy-druid-config</module>
-		<module>lzggy-dubbo-consumer-config</module>
-		<module>lzggy-dubbo-provider-config</module>
-		<module>lzggy-swagger-config</module>
+		<module>lzgyy-druid-config</module>
+		<module>lzgyy-dubbo-consumer-config</module>
+		<module>lzgyy-dubbo-provider-config</module>
+		<module>lzgyy-swagger-config</module>
 	</modules>
 </project>

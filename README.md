@@ -10,15 +10,15 @@
 ```
 lzgyy  
   ├── db 数据库文件存放目录  
-  ├── lzggy-config 配置相关  
-	├── lzggy-druid-config 数据库连接池  
-	├── lzggy-dubbo-consumer-config  dubbo消费者通用配置  
-	├── lzggy-dubbo-provider-config  dubbo生产者通用配置  
-	├── lzggy-swagger-config swagger swagger接口文档生成配置  
+  ├── lzgyy-config 配置相关  
+	├── lzgyy-druid-config 数据库连接池  
+	├── lzgyy-dubbo-consumer-config  dubbo消费者通用配置  
+	├── lzgyy-dubbo-provider-config  dubbo生产者通用配置  
+	├── lzgyy-swagger-config swagger swagger接口文档生成配置  
   ├── lzgyy-common 工具类  
   ├── lzgyy-core 核心类  
   ├── lzgyy-manage 管理服务  
-	├──  lzggy-dubbo-admin-war dubbo管理平台war包  
+	├──  lzgyy-dubbo-admin-war dubbo管理平台war包  
   ├── lzgyy-plugins 插件包  
   	├── lzgyy-elasticsearch-plugin es搜索引擎（暂未实现）  
   	├── lzgyy-iot-client	物联网客户端  

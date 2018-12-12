@@ -8,6 +8,6 @@
   <artifactId>lzgyy-manage</artifactId>
   <packaging>pom</packaging>
   <modules>
-  	<module>lzggy-dubbo-admin-war</module>
+  	<module>lzgyy-dubbo-admin-war</module>
   </modules>
 </project>

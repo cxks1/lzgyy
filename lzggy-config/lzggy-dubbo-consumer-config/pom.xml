@@ -3,10 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.lzgyy</groupId>
-		<artifactId>lzggy-config</artifactId>
+		<artifactId>lzgyy-config</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>lzggy-dubbo-consumer-config</artifactId>
+	<artifactId>lzgyy-dubbo-consumer-config</artifactId>
 	<dependencies>
 		<!-- spring-boot -->
 		<dependency>

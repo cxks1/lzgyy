@@ -9,12 +9,12 @@
   <dependencies>
   		<dependency>
 			<groupId>com.lzgyy</groupId>
-			<artifactId>lzggy-dubbo-provider-config</artifactId>
+			<artifactId>lzgyy-dubbo-provider-config</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<groupId>com.lzgyy</groupId>
-					<artifactId>lzggy-druid-config</artifactId>
+					<artifactId>lzgyy-druid-config</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>

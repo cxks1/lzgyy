@@ -14,7 +14,7 @@
 	<name>lzgyy</name>
 	<description>利贞工业云</description>
 	<modules>
-		<module>lzggy-config</module>
+		<module>lzgyy-config</module>
 		<module>lzgyy-common</module>
 		<module>lzgyy-core</module>
 		<module>lzgyy-manage</module>
