@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : (mysql年底临时)114.215.71.72
+Source Server         : 192.168.0.114
 Source Server Version : 50625
 Source Host           : 192.168.0.114:3306
 Source Database       : lzgyy-platform
