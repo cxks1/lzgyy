@@ -20,7 +20,7 @@ lzgyy
   ├── lzgyy-manage 管理服务  
 	├──  lzgyy-dubbo-admin-war dubbo管理平台war包  
   ├── lzgyy-plugins 插件包  
-  	├── lzgyy-elasticsearch-plugin es搜索引擎（暂未实现）  
+  	├── lzgyy-elasticsearch-plugin es搜索引擎
   	├── lzgyy-iot-client	物联网客户端  
   	├── lzgyy-iot-core   	物联网核心类  
   	├── lzgyy-iot-service	物联网服务端  
