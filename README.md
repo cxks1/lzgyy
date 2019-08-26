@@ -24,7 +24,7 @@ lzgyy
   	├── lzgyy-iot-client	物联网客户端  
   	├── lzgyy-iot-core   	物联网核心类  
   	├── lzgyy-iot-service	物联网服务端  
-  	├── lzgyy-quartz-plugin 定时任务器（暂未实现）  
+  	├── lzgyy-quartz-plugin 定时任务器  
 	├── lzgyy-redis-interf	缓存接口  
 	├── lzgyy-redis-service 缓存服务类（生产者）  
   ├── lzgyy-products  
@@ -35,7 +35,7 @@ lzgyy
 ```
 ### 项目备注
 
-1. 暂未涵盖前端，权限等，具体项目结构后续或许会有所更新变动，仅供参考
+1. 具体项目结构后续或许会有所更新变动，仅供参考
 2. “缓存服务类”、“lzgyy-platform-service”、“lzgyy-platform-web”启动方式配置有差异，后续以“缓存服务类”配置为准。
 3. 关于dubbo问题请参考 http://dubbo.apache.org/zh-cn/
 
